@@ -14,11 +14,25 @@ public class login extends JFrame {
         Import "User" image into the project.
 */
 
+
+
 //        JPanel bgPanel Properties
         JPanel bgPanel = new JPanel();
         bgPanel.setBackground(Color.lightGray);
         bgPanel.setLayout(null);
         bgPanel.setBounds(0,0,360,480);
+
+
+//        JImage User properties
+        ImageIcon userIcon = new ImageIcon(ClassLoader.getSystemResource(
+                "sprites/icons/8542610_user_avatar_icon.png"));
+        Image temp = userIcon.getImage().getScaledInstance(112,128,Image.SCALE_DEFAULT);
+        ImageIcon userIconN = new ImageIcon(temp);
+
+        JLabel userIco = new JLabel(userIconN);
+        userIco.setBounds(124,15, 112,128);
+        bgPanel.add(userIco);
+
 
 //        JLabel Username Properties
         JLabel usernameL = new JLabel("USERNAME");
