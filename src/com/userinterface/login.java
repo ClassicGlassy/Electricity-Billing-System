@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Login extends JFrame {
+public class login extends JFrame {
 
-    public Login(String title){
+    public login(String title){
         super(title);           // Sets the Title of the JFrame
 
         setLayout(new BorderLayout());  // Border layout as JFrame's layout manager
