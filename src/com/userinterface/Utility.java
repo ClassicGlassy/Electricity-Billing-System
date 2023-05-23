@@ -2,6 +2,7 @@ package com.userinterface;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 
 public class Utility {
@@ -17,7 +18,7 @@ public class Utility {
     public Font convertToFont(String FontURL,float FontSize){
         Font customFont = null;
         try{
-            customFont = Font.createFont(Font.TRUETYPE_FONT,ClassLoader.getSystemResourceAsStream(FontURL));
+            customFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(FontURL)));
             customFont = customFont.deriveFont(FontSize);
         }
         catch (Exception e){
