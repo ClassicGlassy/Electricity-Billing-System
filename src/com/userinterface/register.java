@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.userinterface.Utility;
+
 
 public class register extends JFrame{
 
@@ -16,10 +16,16 @@ public class register extends JFrame{
     JComboBox<String> acc_typeC;
     JButton submit,clear,back;
 
+    Utility utility = new Utility();
+
+
     public register(){
 //        Set the Title of JFrame to Register.
         super("Register");
         setLayout(new BorderLayout());
+
+//        Initializing Fonts
+        Font OpenSans15 = utility.convertToFont("font/OpenSans.ttf",30);
 
 //        Initializing Panel for Elements using for Registration
         JPanel registerPanel = new JPanel(new GridBagLayout());
@@ -30,7 +36,6 @@ public class register extends JFrame{
 //        GridBagConstraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,0,10,20);
-        
 
 /* ---------------------------------------------------------------------------------*/
 
@@ -38,6 +43,7 @@ public class register extends JFrame{
         gbc.gridx=0;gbc.gridy=0;
         gbc.gridwidth = 2;
         title = new JLabel("Register an Account");
+        title.setFont(OpenSans15);
         registerPanel.add(title,gbc);
         gbc.gridwidth = 1;
 
@@ -111,13 +117,14 @@ public class register extends JFrame{
 
         gbc.gridx=1; gbc.gridy=6;
         clear = new JButton("Clear");
+
         clear.addActionListener(e -> System.out.println("Clear Button Clicked!"));
-        registerPanel.add(clear,gbc);
+
         clear.setBackground(Color.black);
         clear.setForeground(Color.white);
+        registerPanel.add(clear,gbc);
 
-
-        /* ---------------------------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------------*/
 
 //        Adding Panel to JFrame
         add(registerPanel,BorderLayout.CENTER);
@@ -132,6 +139,7 @@ public class register extends JFrame{
         System.out.println(nameT.getText());
         System.out.println(emailT.getText());
         System.out.println(passwordT.getPassword());
+        System.out.println(acc_typeC.getSelectedIndex());
     }
 
 
