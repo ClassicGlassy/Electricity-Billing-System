@@ -35,6 +35,14 @@ public class register extends JFrame{
         registerPanel.setBorder(new TitledBorder(new LineBorder(Color.BLUE),"Create Account"
                 ,TitledBorder.LEADING,TitledBorder.TOP,null,Color.red));
         registerPanel.setBackground(Color.WHITE);
+//
+
+//        TODO Replace current RegisterPanel with Image one
+        /*
+        JPanel registerPanel = new panelWithBG("sprites/background/abstract.png");
+        registerPanel.setLayout(new GridBagLayout());
+         */
+
 
 //        GridBagConstraints
         GridBagConstraints gbc = new GridBagConstraints();
