@@ -6,15 +6,17 @@ import java.sql.SQLException;
 
 public class QueryProvider {
 
-    public void insertInto(Connection con, String name, String pass, String code){
+    public void insertInto(Connection con, String name,String email, String pass, String phone, byte acc_type){
         try{
-            String insertQuery = "insert into profile(name,password,code) values(?,?,?)";
+            String insertQuery = "insert into profiles(name,email,pwd,phone,acc_type) values(?,?,?,?,?)";
 //            Prepared Statement
             PreparedStatement statement = con.prepareStatement(insertQuery);
 //            Set the Value
             statement.setString(1,name);
-            statement.setString(2,pass);
-            statement.setString(3,code);
+            statement.setString(2,email);
+            statement.setString(3,pass);
+            statement.setString(4,phone);
+            statement.setByte(5,acc_type);
 
 //            execute
             int res = statement.executeUpdate();

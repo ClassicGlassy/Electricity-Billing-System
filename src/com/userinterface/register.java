@@ -1,10 +1,13 @@
 package com.userinterface;
 
+import com.database.ConnectionProvider;
+import com.database.QueryProvider;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import com.userinterface.Utility;
+import java.sql.Connection;
 
 
 public class register extends JFrame{
@@ -136,10 +139,23 @@ public class register extends JFrame{
     }
 
     private void submitQuery(){
-        System.out.println(nameT.getText());
-        System.out.println(emailT.getText());
-        System.out.println(passwordT.getPassword());
-        System.out.println(acc_typeC.getSelectedIndex());
+//        System.out.println(nameT.getText());
+//        System.out.println(emailT.getText());
+//        System.out.println(passwordT.getPassword());
+//        System.out.println(acc_typeC.getSelectedIndex());
+
+        Connection c;
+        ConnectionProvider _connectionProvider = new ConnectionProvider();
+        QueryProvider _queryProvider = new QueryProvider();
+//
+        c = _connectionProvider.connectToDB();
+
+//        String password = ;
+//        System.out.println(password);
+
+        _queryProvider.insertInto(c,nameT.getText(),emailT.getText(),String.valueOf(passwordT.getPassword()),phoneT.getText(),(byte)acc_typeC.getSelectedIndex());
+
+
     }
 
 
