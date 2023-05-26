@@ -2,6 +2,9 @@ package com.userinterface;
 
 import com.database.ConnectionProvider;
 import com.database.QueryProvider;
+import com.userinterface.components.labelComponent;
+import com.userinterface.components.passwordComponent;
+import com.userinterface.components.textboxComponent;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -19,7 +22,6 @@ public class register extends JFrame{
     JComboBox<String> acc_typeC;
     JButton submit,clear,back;
 
-    Utility utility = new Utility();
 
 
     public register(){
@@ -27,22 +29,12 @@ public class register extends JFrame{
         super("Register");
         setLayout(new BorderLayout());
 
-//        Initializing Fonts
-        Font OpenSans15 = utility.convertToFont("font/OpenSans.ttf",30);
 
 //        Initializing Panel for Elements using for Registration
         JPanel registerPanel = new JPanel(new GridBagLayout());
         registerPanel.setBorder(new TitledBorder(new LineBorder(Color.BLUE),"Create Account"
                 ,TitledBorder.LEADING,TitledBorder.TOP,null,Color.red));
         registerPanel.setBackground(Color.WHITE);
-//
-
-//        TODO Replace current RegisterPanel with Image one
-        /*
-        JPanel registerPanel = new panelWithBG("sprites/background/abstract.png");
-        registerPanel.setLayout(new GridBagLayout());
-         */
-
 
 //        GridBagConstraints
         GridBagConstraints gbc = new GridBagConstraints();
@@ -52,9 +44,9 @@ public class register extends JFrame{
 
 //        Row 1: Title
         gbc.gridx=0;gbc.gridy=0;
-        gbc.gridwidth = 2;
-        title = new JLabel("Register an Account");
-        title.setFont(OpenSans15);
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridwidth = 4;
+        title = new labelComponent("Register an Account",25);
         registerPanel.add(title,gbc);
         gbc.gridwidth = 1;
 
@@ -63,60 +55,72 @@ public class register extends JFrame{
 //        Row 2: Create Account
 //        Label
         gbc.gridx=0;gbc.gridy=1;
-        acc_typeL = new JLabel("Create Account as:");
+        acc_typeL = new labelComponent("Create Account as:");
         registerPanel.add(acc_typeL,gbc);
-//        TextField
+//        ComboBox
         gbc.gridx=1;
+        gbc.gridwidth=3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         String[] acc_types = {"Admin","Tenant"};
         acc_typeC = new JComboBox<>(acc_types);
         registerPanel.add(acc_typeC,gbc);
 
+        gbc.fill = GridBagConstraints.NONE;
+
 //        Row 3: Name
         //        Label
         gbc.gridx=0;gbc.gridy=2;
-        nameL = new JLabel("Name:");
+        gbc.gridwidth=0;
+        nameL = new labelComponent("Name:");
         registerPanel.add(nameL,gbc);
 //        TextField
         gbc.gridx=1;
-        nameT = new JTextField(25);
+        gbc.gridwidth=3;
+        nameT = new textboxComponent(25);
         registerPanel.add(nameT,gbc);
 
 //        Row 4: Email
 //        Label
         gbc.gridx=0;gbc.gridy=3;
-        emailL = new JLabel("Email:");
+        gbc.gridwidth=0;
+        emailL = new labelComponent("Email:");
         registerPanel.add(emailL,gbc);
 //        TextField
         gbc.gridx=1;
-        emailT = new JTextField(25);
+        gbc.gridwidth=3;
+        emailT = new textboxComponent(25);
         registerPanel.add(emailT,gbc);
 
 //        Row 5: Password
 //        Label
         gbc.gridx=0;gbc.gridy=4;
-        passwordL = new JLabel("Password:");
+        gbc.gridwidth=0;
+        passwordL = new labelComponent("Password:");
         registerPanel.add(passwordL,gbc);
 //        TextField
         gbc.gridx=1;
-        passwordT = new JPasswordField(25);
+        gbc.gridwidth=3;
+        passwordT = new passwordComponent(25);
         registerPanel.add(passwordT,gbc);
 
 //        Row 6: Phone
 //        Label
         gbc.gridx=0;gbc.gridy=5;
-        phoneL = new JLabel("Phone:");
+        gbc.gridwidth=0;
+        phoneL = new labelComponent("Phone:");
         registerPanel.add(phoneL,gbc);
 //        TextField
         gbc.gridx=1;
-        phoneT = new JTextField(25);
+        gbc.gridwidth=3;
+        phoneT = new textboxComponent(25);
         registerPanel.add(phoneT,gbc);
 
 //        Row 7: Submit and Clear Buttons
 //        Buttons
 
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.anchor = GridBagConstraints.LINE_START;
 
-        gbc.gridx=0; gbc.gridy=6;
+        gbc.gridx=1; gbc.gridy=6;
         submit = new JButton("Submit");
 
         submit.addActionListener(e -> submitQuery());
@@ -126,7 +130,8 @@ public class register extends JFrame{
         registerPanel.add(submit,gbc);
 
 
-        gbc.gridx=1; gbc.gridy=6;
+        gbc.gridx=3;
+        gbc.anchor = GridBagConstraints.LINE_END;
         clear = new JButton("Clear");
 
         clear.addActionListener(e -> System.out.println("Clear Button Clicked!"));
@@ -147,23 +152,13 @@ public class register extends JFrame{
     }
 
     private void submitQuery(){
-//        System.out.println(nameT.getText());
-//        System.out.println(emailT.getText());
-//        System.out.println(passwordT.getPassword());
-//        System.out.println(acc_typeC.getSelectedIndex());
-
         Connection c;
         ConnectionProvider _connectionProvider = new ConnectionProvider();
         QueryProvider _queryProvider = new QueryProvider();
-//
+
         c = _connectionProvider.connectToDB();
 
-//        String password = ;
-//        System.out.println(password);
-
         _queryProvider.insertInto(c,nameT.getText(),emailT.getText(),String.valueOf(passwordT.getPassword()),phoneT.getText(),(byte)acc_typeC.getSelectedIndex());
-
-
     }
 
 

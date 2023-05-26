@@ -22,11 +22,12 @@ public class QueryProvider {
             int res = statement.executeUpdate();
             System.out.println(res);
             System.out.println("Inserted Successfully");
+            con.close();
 
 
         }
         catch (SQLException e){
-            System.out.println("Can't Process the Insert Query to Profile Table.");
+            System.out.println("Can't Process the Insert Query to Profiles Table.");
         }
 
 

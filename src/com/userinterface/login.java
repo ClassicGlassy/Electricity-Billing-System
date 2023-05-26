@@ -1,107 +1,103 @@
 package com.userinterface;
 
+import com.userinterface.components.labelComponent;
+import com.userinterface.components.passwordComponent;
+import com.userinterface.components.textboxComponent;
+
 import javax.swing.*;
 import java.awt.*;
 
 
 public class login extends JFrame {
 
-    public login(String title){
-        super(title);           // Sets the Title of the JFrame
+    JLabel loginImage, usernameL, passwordL;
+    JTextField usernameT;
+    JPasswordField passwordT;
+    JButton loginB, registerB;
 
-        setLayout(new BorderLayout());  // Border layout as JFrame's layout manager
+    public login(){
+//        Set the Title of Login Frame
+        super("Login");
+        setLayout(new BorderLayout());
 
-        Utility converter = new Utility();
-        Container container = getContentPane();
-
-        JLabel icon = new JLabel(converter.convertToIcon("sprites/FontAwesome/user_Normal.png",100,100));
-        container.add(icon,BorderLayout.NORTH);
-
-        JPanel bg_panel = new JPanel();
-        bg_panel.setBackground(Color.GREEN);
-        bg_panel.setLayout(new GridBagLayout());
-
-//        GridBag Constrains
-        GridBagConstraints gc = new GridBagConstraints();
-
-//        gc.anchor = GridBagConstraints.WEST;
-//        gc.weightx=0;
-//        gc.weighty=0.5;
-//
-//        gc.gridx = 0;
-//        gc.gridy = 0;
-//
-//        JLabel usernameLabel = new JLabel("Username: ");
-//        usernameLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//        bg_panel.add(usernameLabel);
-//
-////                Second Column
-//        gc.anchor = GridBagConstraints.EAST;
-////        gc.gridx = 0;
-//        gc.gridy = 1;
-//
-//        JTextField nameField = new JTextField(10);
-//        nameField.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-//        bg_panel.add(nameField);
-
-        Font labelFont = converter.convertToFont("font/OpenSans.ttf",24);
+//        Initializing Utility Package
+        Utility _util = new Utility();
 
 
-        JLabel nameLabel = new JLabel("Name: ");
-        nameLabel.setFont(labelFont);
-        JLabel occupationLabel = new JLabel("Occupation: ");
-        occupationLabel.setFont(labelFont);
+//        Row 1: Picture
+        JPanel loginPicPanel = new JPanel(new GridBagLayout());
+        loginPicPanel.setBackground(Color.WHITE);
+        GridBagConstraints gbc1 = new GridBagConstraints();
+        gbc1.gridx =0;gbc1.gridy = 0;
+        loginImage = new JLabel(_util.convertToIcon("sprites/icons/8542610_user_avatar_icon.png",160,160));
+        loginPicPanel.add(loginImage,gbc1);
+        add(loginPicPanel,BorderLayout.NORTH);
 
-        JTextField nameField = new JTextField(10);
-        JTextField occupationField = new JTextField(10);
+//        Initializing Panel to add Elements named loginPanel
+        JPanel loginPanel = new JPanel(new GridBagLayout());
+        loginPanel.setBackground(Color.WHITE);
 
+//        GridBag Constraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0,0,10,20);
 
-        //        First column ////
+//        Row 2: Username
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.gridy=0;gbc.gridx=0;
+        gbc.gridwidth = 3;
+//        usernameL = new JLabel("Username:");
+        usernameL = new labelComponent("Username:");
+        loginPanel.add(usernameL,gbc);
 
-//        gc.anchor = GridBagConstraints.LINE_END;
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.weightx=0;
-        gc.weighty=0;
+        gbc.gridy=1;gbc.gridwidth=3;
+//        usernameT = new JTextField(20);
+        usernameT = new textboxComponent(15);
+        loginPanel.add(usernameT,gbc);
 
-        gc.gridx = 0;
-        gc.gridy = 0;
+//        Row 3: Password
+        gbc.gridy=2;gbc.gridwidth=1;
+//        passwordL = new JLabel("Password:");
+        passwordL = new labelComponent("Pasword:");
+        loginPanel.add(passwordL,gbc);
 
-        bg_panel.add(nameLabel,gc);
-        gc.gridx = 0;
-        gc.gridy = 1;
+        gbc.gridy=3;gbc.gridwidth=3;
+//        gbc.fill=GridBagConstraints.HORIZONTAL;
+//        passwordT = new JPasswordField(20);
+        passwordT = new passwordComponent(15);
+        loginPanel.add(passwordT,gbc);
 
-        bg_panel.add(nameField,gc);
+//        Row 4: Buttons
+        gbc.gridwidth=2;
+        gbc.anchor = GridBagConstraints.LINE_START;
+        gbc.fill=GridBagConstraints.HORIZONTAL;
 
+        gbc.gridy = 4; gbc.gridx= 0;
+        loginB = new JButton("Login");
+        loginPanel.add(loginB,gbc);
 
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.fill=GridBagConstraints.NONE;
+        gbc.gridwidth=1;
+        gbc.gridx = 2;
+        registerB = new JButton("Register");
+        registerB.addActionListener(e -> register());
+        loginPanel.add(registerB,gbc);
 
-//        Second Column
-//        gc.anchor = GridBagConstraints.LINE_START;
-
-
-        gc.weighty=0;
-
-        gc.gridx = 0;
-        gc.gridy = 2;
-        bg_panel.add(occupationLabel,gc);
-
-        gc.weightx=0;
-        gc.weighty=0;
-        gc.gridy = 3;
-        bg_panel.add(occupationField,gc);
+//        Adding Login Panel to JFrame
+        add(loginPanel,BorderLayout.CENTER);
 
 
 
-        container.add(bg_panel,BorderLayout.CENTER);
-
-
-
-
-
-        setSize(360,640);
+//        Properties of Login Frame.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500,600);
         setVisible(true);
 
+    }
 
+    private void register(){
+        JFrame frame = new register();
+        frame.setLocationRelativeTo(null);
     }
 
 
