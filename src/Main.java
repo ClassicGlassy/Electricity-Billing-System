@@ -1,4 +1,4 @@
-import com.userinterface.login;
+import com.userinterface.Login;
 
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new login();
+                JFrame frame = new Login();
                 frame.setLocationRelativeTo(null);
             }
         });

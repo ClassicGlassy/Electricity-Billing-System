@@ -1,11 +1,9 @@
 package com.userinterface.components;
 
-import com.userinterface.Utility;
-
 import javax.swing.*;
 
 public class textboxComponent extends JTextField {
-    //        Initializing Utility Package
+//        Initializing Utility Package
     Utility _util = new Utility();
     public textboxComponent(int column){
         this.setColumns(column);

@@ -1,7 +1,5 @@
 package com.userinterface.components;
 
-import com.userinterface.Utility;
-
 import javax.swing.*;
 
 public class passwordComponent extends JPasswordField {

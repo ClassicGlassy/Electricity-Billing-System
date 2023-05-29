@@ -13,7 +13,7 @@ import java.awt.*;
 import java.sql.Connection;
 
 
-public class register extends JFrame{
+public class Register extends JFrame{
 
 //    Elements for JPanel
     JLabel title, nameL, emailL,passwordL, phoneL, acc_typeL, meterL;
@@ -24,7 +24,7 @@ public class register extends JFrame{
 
 
 
-    public register(){
+    public Register(){
 //        Set the Title of JFrame to Register.
         super("Register");
         setLayout(new BorderLayout());
@@ -51,6 +51,7 @@ public class register extends JFrame{
         gbc.gridwidth = 1;
 
         gbc.anchor = GridBagConstraints.LINE_START;
+
 
 //        Row 2: Create Account
 //        Label
