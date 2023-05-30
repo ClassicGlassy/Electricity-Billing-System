@@ -5,19 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionProvider {
-    Connection c;
-    public Connection connectToDB(){
+
+    public Connection connectToDB() throws SQLException{
+        Connection c = null;
         try{
             c = DriverManager.getConnection("jdbc:mariadb://localhost:3306/ebs","root","");
-            System.out.println("Connection Successful!");
+//            System.out.println("Connection Successful!");
+            return c;
         }
         catch (SQLException e){
-            System.out.println("Cannot create a connection to DB");
+            throw new SQLException("Cannot connect to DataBase.");
         }
-        return c;
     }
 
-    public void closeDB(){
+//    REMOVE this Function if not used in Future
+    public void closeDB(Connection c){
         try {
             c.close();
         }

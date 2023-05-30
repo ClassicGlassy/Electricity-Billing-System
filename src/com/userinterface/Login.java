@@ -2,11 +2,14 @@ package com.userinterface;
 
 import com.database.ConnectionProvider;
 import com.database.RegisterandLoginQuery;
+
 import com.userinterface.components.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Login extends JFrame {
 
@@ -68,7 +71,7 @@ public class Login extends JFrame {
         gbc.fill=GridBagConstraints.HORIZONTAL;
 
         gbc.gridy = 4; gbc.gridx= 0;
-        loginB = new buttonComponent("Login","sprites/icons/login_Ico.png",15);
+        loginB = new buttonComponent("Login","sprites/icons/login_Ico.png",15,Color.GREEN,Color.BLACK);
         loginB.addActionListener(e -> login());
         loginPanel.add(loginB,gbc);
 
@@ -76,7 +79,7 @@ public class Login extends JFrame {
         gbc.fill=GridBagConstraints.NONE;
         gbc.gridwidth=1;
         gbc.gridx = 2;
-        registerB = new buttonComponent("Register","sprites/icons/register_Ico.png",15);
+        registerB = new buttonComponent("Register","sprites/icons/register_Ico.png",15,Color.PINK,Color.BLACK);
         registerB.addActionListener(e -> register());
         loginPanel.add(registerB,gbc);
 
@@ -91,30 +94,30 @@ public class Login extends JFrame {
 
     }
 
-    private void login() {
-        Connection c;
+    private void login(){
+        Connection con;
         ConnectionProvider _connectionProvider = new ConnectionProvider();
         RegisterandLoginQuery regAndlog = new RegisterandLoginQuery();
-        c = _connectionProvider.connectToDB();
 
-        byte rs = regAndlog.loginUser(c,emailT.getText(),String.valueOf(passwordT.getPassword()));
-//        System.out.println(rs);
-        if(rs == 3){
-            JOptionPane.showMessageDialog(null,"Invalid Login");
-        }
-        else{
-            if(rs == 0){
-                System.out.println("Logging as Administrator");
-            }
-            else{
-                System.out.println("Logging as Tenant");
+        try {
+//        Connect to Database
+            con = _connectionProvider.connectToDB();
+            ResultSet rs = regAndlog.loginUser(con, emailT.getText(), String.valueOf(passwordT.getPassword()));
+            if (rs.next()) {
+                setVisible(false);
+                if(rs.getByte("acc_type") == 0) new Project("Admin");
+                else new Project("Tenant");
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Login Credentials");
             }
         }
-
-
+        catch (SQLException e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
     }
 
     private void register(){
+        setVisible(false);
         JFrame frame = new Register();
         frame.setLocationRelativeTo(null);
     }

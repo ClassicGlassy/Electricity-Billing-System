@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Project extends JFrame {
-    Project(){
+    public Project(String Title){
+        super(Title);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JMenuBar mb = new JMenuBar();
@@ -26,7 +27,7 @@ public class Project extends JFrame {
     }
 
 //    TODO Remove Main function. Debugging Only
-public static void main(String[] args) {
-    new Project();
-}
+//public static void main(String[] args) {
+//    new Project();
+//}
 }

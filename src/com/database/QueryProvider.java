@@ -19,8 +19,7 @@ public class QueryProvider {
             statement.setByte(5,acc_type);
 
 //            execute
-            int res = statement.executeUpdate();
-            System.out.println(res);
+            statement.executeUpdate();
             System.out.println("Inserted Successfully");
             con.close();
 

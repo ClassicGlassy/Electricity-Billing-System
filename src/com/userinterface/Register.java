@@ -1,16 +1,16 @@
 package com.userinterface;
 
 import com.database.ConnectionProvider;
-import com.database.QueryProvider;
-import com.userinterface.components.labelComponent;
-import com.userinterface.components.passwordComponent;
-import com.userinterface.components.textboxComponent;
+import com.database.RegisterandLoginQuery;
+
+import com.userinterface.components.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 
 public class Register extends JFrame{
@@ -122,24 +122,25 @@ public class Register extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
 
         gbc.gridx=1; gbc.gridy=6;
-        submit = new JButton("Submit");
-
+        submit = new buttonComponent("Submit","sprites/icons/register_Ico.png",15,Color.YELLOW,Color.BLACK);
         submit.addActionListener(e -> submitQuery());
 
-        submit.setBackground(Color.black);
-        submit.setForeground(Color.white);
         registerPanel.add(submit,gbc);
 
 
         gbc.gridx=3;
         gbc.anchor = GridBagConstraints.LINE_END;
-        clear = new JButton("Clear");
-
+        clear = new buttonComponent("Clear","sprites/icons/clear_Ico.png",15,Color.PINK,Color.WHITE);
         clear.addActionListener(e -> System.out.println("Clear Button Clicked!"));
 
-        clear.setBackground(Color.black);
-        clear.setForeground(Color.white);
         registerPanel.add(clear,gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridy = 0;gbc.gridx = 0;
+        gbc.gridwidth = 3;
+        back = new buttonComponent("Back",Color.CYAN,Color.BLUE);
+        back.addActionListener(e -> login());
+        registerPanel.add(back,gbc);
 
 /* ---------------------------------------------------------------------------------*/
 
@@ -152,14 +153,32 @@ public class Register extends JFrame{
         setVisible(true);
     }
 
+//    Functions
+
     private void submitQuery(){
-        Connection c;
-        ConnectionProvider _connectionProvider = new ConnectionProvider();
-        QueryProvider _queryProvider = new QueryProvider();
+        int option = JOptionPane.showConfirmDialog(null,"Do you want to register?");
+        if(option == 0) {
+            Connection c;
+            ConnectionProvider _connectionProvider = new ConnectionProvider();
+            RegisterandLoginQuery _queryProvider = new RegisterandLoginQuery();
 
-        c = _connectionProvider.connectToDB();
 
-        _queryProvider.insertInto(c,nameT.getText(),emailT.getText(),String.valueOf(passwordT.getPassword()),phoneT.getText(),(byte)acc_typeC.getSelectedIndex());
+            try {
+                c = _connectionProvider.connectToDB();
+                _queryProvider.registerUser(c, nameT.getText(), emailT.getText(),
+                        String.valueOf(passwordT.getPassword()), phoneT.getText(), (byte) acc_typeC.getSelectedIndex());
+                JOptionPane.showMessageDialog(null,"Account created successfully!");
+                login();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,e.getMessage());
+            }
+        }
+    }
+
+    private void login(){
+        setVisible(false);
+        JFrame frame = new Login();
+        frame.setLocationRelativeTo(null);
     }
 
 
