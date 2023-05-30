@@ -1,17 +1,21 @@
 package com.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-public class RegisterandLoginQuery {
-    public void registerUser(Connection con, String name,String email, String pass, String phone, byte acc_type) throws SQLException {
+import java.sql.*;
+
+public class RegisterAndLoginQuery {
+    Connection con;
+
+    public RegisterAndLoginQuery() throws SQLException {
+        ConnectionProvider _connectionProvider = new ConnectionProvider();
+        con = _connectionProvider.getConnection();
+    }
+
+    public void registerUser(String name,String email, String pass, String phone, byte acc_type) throws SQLException {
         {
             String insertQuery = "insert into profiles(name,email,pwd,phone,acc_type) values(?,?,?,?,?)";
 
-            if(con != null) {
-                try {
+            try {
 //            Prepared Statement
                     PreparedStatement statement = con.prepareStatement(insertQuery);
 //            Set the Value
@@ -21,22 +25,22 @@ public class RegisterandLoginQuery {
                     statement.setString(4, phone);
                     statement.setByte(5, acc_type);
 
-//            execute
+//                  execute
                     statement.executeUpdate();
-                    con.close();
+
                 }
                 catch (SQLException e){
                    throw new SQLException("An account with same Email already exist!");
                 }
+                finally {
+                    con.close();
             }
         }
-
-
     }
 
-    public ResultSet loginUser(Connection con, String Email, String Password) throws SQLException {
 
-        if(con != null) {
+    public ResultSet loginUser(String Email, String Password)throws SQLException{
+        try {
             ResultSet result;
             String query = "select acc_type from profiles where email = ? and pwd = ?";
 
@@ -44,14 +48,16 @@ public class RegisterandLoginQuery {
             statement.setString(1, Email);
             statement.setString(2, Password);
 
-//            System.out.println(query);
-
             result = statement.executeQuery();
-            con.close();
             return result;
         }
-        else {
-            throw new SQLException();
+        catch (SQLException e){
+            e.printStackTrace();
+            throw new SQLException("Invalid Inputs");
         }
+        finally {
+            con.close();
+        }
+
     }
 }

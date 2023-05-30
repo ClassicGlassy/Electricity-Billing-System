@@ -6,16 +6,17 @@ import java.sql.SQLException;
 
 public class ConnectionProvider {
 
-    public Connection connectToDB() throws SQLException{
-        Connection c = null;
-        try{
-            c = DriverManager.getConnection("jdbc:mariadb://localhost:3306/ebs","root","");
-//            System.out.println("Connection Successful!");
-            return c;
+    private final Connection connection;
+    public ConnectionProvider() throws SQLException {
+        try {
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/ebs", "root", "");
         }
         catch (SQLException e){
             throw new SQLException("Cannot connect to DataBase.");
         }
+    }
+    public Connection getConnection() {
+        return connection;
     }
 
 //    REMOVE this Function if not used in Future

@@ -1,13 +1,13 @@
 package com.userinterface;
 
-import com.database.ConnectionProvider;
-import com.database.RegisterandLoginQuery;
+//import com.database.ConnectionProvider;
+import com.database.RegisterAndLoginQuery;
 
 import com.userinterface.components.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
+//import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -60,8 +60,6 @@ public class Login extends JFrame {
         loginPanel.add(passwordL,gbc);
 
         gbc.gridy=3;gbc.gridwidth=3;
-//        gbc.fill=GridBagConstraints.HORIZONTAL;
-//        passwordT = new JPasswordField(20);
         passwordT = new passwordComponent(20);
         loginPanel.add(passwordT,gbc);
 
@@ -95,14 +93,10 @@ public class Login extends JFrame {
     }
 
     private void login(){
-        Connection con;
-        ConnectionProvider _connectionProvider = new ConnectionProvider();
-        RegisterandLoginQuery regAndlog = new RegisterandLoginQuery();
 
         try {
-//        Connect to Database
-            con = _connectionProvider.connectToDB();
-            ResultSet rs = regAndlog.loginUser(con, emailT.getText(), String.valueOf(passwordT.getPassword()));
+            RegisterAndLoginQuery regAndlog = new RegisterAndLoginQuery();
+            ResultSet rs = regAndlog.loginUser(emailT.getText(), String.valueOf(passwordT.getPassword()));
             if (rs.next()) {
                 setVisible(false);
                 if(rs.getByte("acc_type") == 0) new Project("Admin");

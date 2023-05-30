@@ -1,7 +1,6 @@
 package com.userinterface;
 
-import com.database.ConnectionProvider;
-import com.database.RegisterandLoginQuery;
+import com.database.RegisterAndLoginQuery;
 
 import com.userinterface.components.*;
 
@@ -9,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 
@@ -158,14 +156,9 @@ public class Register extends JFrame{
     private void submitQuery(){
         int option = JOptionPane.showConfirmDialog(null,"Do you want to register?");
         if(option == 0) {
-            Connection c;
-            ConnectionProvider _connectionProvider = new ConnectionProvider();
-            RegisterandLoginQuery _queryProvider = new RegisterandLoginQuery();
-
-
             try {
-                c = _connectionProvider.connectToDB();
-                _queryProvider.registerUser(c, nameT.getText(), emailT.getText(),
+                RegisterAndLoginQuery _queryProvider = new RegisterAndLoginQuery();
+                _queryProvider.registerUser(nameT.getText(), emailT.getText(),
                         String.valueOf(passwordT.getPassword()), phoneT.getText(), (byte) acc_typeC.getSelectedIndex());
                 JOptionPane.showMessageDialog(null,"Account created successfully!");
                 login();
