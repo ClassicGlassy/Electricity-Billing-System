@@ -62,6 +62,7 @@ public class Register extends JFrame{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         String[] acc_types = {"Admin","Tenant"};
         acc_typeC = new JComboBox<>(acc_types);
+        acc_typeC.setSelectedIndex(1);
         registerPanel.add(acc_typeC,gbc);
 
         gbc.fill = GridBagConstraints.NONE;
@@ -76,6 +77,7 @@ public class Register extends JFrame{
         gbc.gridx=1;
         gbc.gridwidth=3;
         nameT = new textboxComponent(25);
+
         registerPanel.add(nameT,gbc);
 
 //        Row 4: Email
@@ -125,11 +127,10 @@ public class Register extends JFrame{
 
         registerPanel.add(submit,gbc);
 
-
         gbc.gridx=3;
         gbc.anchor = GridBagConstraints.LINE_END;
         clear = new buttonComponent("Clear","sprites/icons/clear_Ico.png",15,Color.PINK,Color.WHITE);
-        clear.addActionListener(e -> System.out.println("Clear Button Clicked!"));
+        clear.addActionListener(e -> clear());
 
         registerPanel.add(clear,gbc);
 
@@ -172,6 +173,14 @@ public class Register extends JFrame{
         setVisible(false);
         JFrame frame = new Login();
         frame.setLocationRelativeTo(null);
+    }
+
+    private void clear(){
+        nameT.setText("");
+        emailT.setText("");
+        phoneT.setText("");
+        acc_typeC.setSelectedIndex(1);
+        nameT.requestFocus();
     }
 
 

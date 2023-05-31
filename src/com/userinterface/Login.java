@@ -93,16 +93,17 @@ public class Login extends JFrame {
     }
 
     private void login(){
-
         try {
-            RegisterAndLoginQuery regAndlog = new RegisterAndLoginQuery();
-            ResultSet rs = regAndlog.loginUser(emailT.getText(), String.valueOf(passwordT.getPassword()));
-            if (rs.next()) {
-                setVisible(false);
-                if(rs.getByte("acc_type") == 0) new Project("Admin");
-                else new Project("Tenant");
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid Login Credentials");
+            RegisterAndLoginQuery Login = new RegisterAndLoginQuery();
+            try (ResultSet rs = Login.loginUser(emailT.getText(), String.valueOf(passwordT.getPassword()))) {
+                if (rs.next()) {
+                    setVisible(false);
+                    if (rs.getByte("acc_type") == 0) new Project("Admin");
+                    else new Project("Tenant");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid Login Credentials");
+                    clear();
+                }
             }
         }
         catch (SQLException e){
@@ -114,6 +115,11 @@ public class Login extends JFrame {
         setVisible(false);
         JFrame frame = new Register();
         frame.setLocationRelativeTo(null);
+    }
+    private void clear(){
+        emailT.setText("");
+        passwordT.setText("");
+        emailT.requestFocus();
     }
 
 
