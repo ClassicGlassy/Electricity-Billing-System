@@ -4,15 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.initial.DeserializeFile;
+
 public class ConnectionProvider {
 
     private final Connection connection;
     public ConnectionProvider() throws SQLException {
         try {
-            connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/ebs", "root", "");
+            DeserializeFile DB = new DeserializeFile();
+            connection = DriverManager.getConnection("jdbc:mariadb://localhost:"+DB.port + "/ebs", DB.user, DB.password);
         }
         catch (SQLException e){
-            throw new SQLException("Cannot connect to DataBase.");
+            throw new SQLException("Cannot connect to DataBase. Please start the Database or Configure your settings.");
         }
     }
     public Connection getConnection() {

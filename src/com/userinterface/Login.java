@@ -1,15 +1,15 @@
 package com.userinterface;
 
-//import com.database.ConnectionProvider;
+
 import com.database.RegisterAndLoginQuery;
 
 import com.userinterface.components.*;
 
 import javax.swing.*;
 import java.awt.*;
-//import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 public class Login extends JFrame {
 
@@ -81,6 +81,15 @@ public class Login extends JFrame {
         registerB.addActionListener(e -> register());
         loginPanel.add(registerB,gbc);
 
+//        Settings Button
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.fill=GridBagConstraints.NONE;
+        gbc.gridwidth=1;
+        gbc.gridx = 2;gbc.gridy=0;
+        registerB = new buttonComponent("","sprites/icons/settings.png",15,Color.PINK,Color.BLACK);
+        registerB.addActionListener(e -> settings());
+        loginPanel.add(registerB,gbc);
+
 //        Adding Login Panel to JFrame
         add(loginPanel,BorderLayout.CENTER);
 
@@ -120,6 +129,12 @@ public class Login extends JFrame {
         emailT.setText("");
         passwordT.setText("");
         emailT.requestFocus();
+    }
+
+    private void settings(){
+        setVisible(false);
+        JFrame frame = new ConfigDB();
+        frame.setLocationRelativeTo(null);
     }
 
 

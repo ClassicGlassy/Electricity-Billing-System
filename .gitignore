@@ -31,3 +31,4 @@ bin/
 ### MY Ignores ###
 .idea/workspace.xml
 ignore/
+*.cfg

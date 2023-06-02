@@ -2,6 +2,7 @@ package com.database;
 
 
 import java.sql.*;
+import java.util.Objects;
 
 public class RegisterAndLoginQuery {
     Connection con;
