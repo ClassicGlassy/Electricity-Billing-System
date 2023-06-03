@@ -1,6 +1,8 @@
 package com.initial;
 
 import com.database.InitialSetup;
+import com.userinterface.ConfigDB_Settings;
+import com.userinterface.ConfigDB_Setup;
 import com.userinterface.Login;
 
 import javax.swing.*;
@@ -12,12 +14,16 @@ public class Init{
         File f = new File("config.cfg");
         if(!f.exists()) {
             new SerializeFile("root", "","3306");
-            try {
-                new InitialSetup();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
+        try {
+            new InitialSetup();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,e.getMessage(),"Warning!",JOptionPane.ERROR_MESSAGE);
+            JFrame c = new ConfigDB_Setup();
+            c.setLocationRelativeTo(null);
+            return;
+        }
+
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override

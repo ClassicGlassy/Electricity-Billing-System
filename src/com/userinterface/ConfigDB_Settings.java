@@ -10,13 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class ConfigDB extends JFrame {
+public class ConfigDB_Settings extends JFrame {
     JLabel DBusername, DBpassword,DBPort;
     JTextField DBusernameT,DBPortT;
     JPasswordField DBpasswordT;
     JButton DBsave,DBreset;
 
-    public ConfigDB(){
+    public ConfigDB_Settings(){
         super("Configure Database");
         setLayout(new BorderLayout());
 
@@ -82,7 +82,6 @@ public class ConfigDB extends JFrame {
         DBConfigPanel.add(DBreset,gbc);
         DBreset.addActionListener(e ->reset());
 
-
         add(DBConfigPanel,BorderLayout.CENTER);
 
 
@@ -97,7 +96,7 @@ public class ConfigDB extends JFrame {
 
     private void save(){
         if(!Objects.equals(DBusername.getText(), "") && !Objects.equals(DBPortT.getText(), "")){
-            new SerializeFile(DBusername.getText(),String.valueOf(DBpasswordT.getPassword()),DBPortT.getText());
+            new SerializeFile(DBusernameT.getText(),String.valueOf(DBpasswordT.getPassword()),DBPortT.getText());
             JOptionPane.showMessageDialog(null,"Configuration save successfully.","Success",JOptionPane.INFORMATION_MESSAGE);
             login();
         }

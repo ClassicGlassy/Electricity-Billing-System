@@ -3,7 +3,7 @@ package com.database;
 import com.initial.DeserializeFile;
 
 import java.sql.*;
-import java.util.Objects;
+
 
 public class InitialSetup {
     public InitialSetup() throws SQLException{
@@ -33,7 +33,7 @@ public class InitialSetup {
 
         }
         catch (SQLException e){
-            e.printStackTrace();
+            throw new SQLException("Cannot establish a connection to the Database.");
         }
 
     }

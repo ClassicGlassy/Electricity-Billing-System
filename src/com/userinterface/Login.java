@@ -133,7 +133,7 @@ public class Login extends JFrame {
 
     private void settings(){
         setVisible(false);
-        JFrame frame = new ConfigDB();
+        JFrame frame = new ConfigDB_Settings();
         frame.setLocationRelativeTo(null);
     }
 
