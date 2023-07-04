@@ -81,7 +81,7 @@ public class ConfigDB_Setup extends JFrame {
         gbc.gridx=3;
         DBreset = new buttonComponent("Retry",Color.BLACK,Color.white);
         DBConfigPanel.add(DBreset,gbc);
-        DBreset.addActionListener(e ->retry());
+        DBreset.addActionListener(e ->reconnectDB());
 
 
         add(DBConfigPanel,BorderLayout.CENTER);
@@ -105,10 +105,6 @@ public class ConfigDB_Setup extends JFrame {
         else{
             JOptionPane.showMessageDialog(null,"Please fill all the fields","Unsuccessful",JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private void retry(){
-        reconnectDB();
     }
 
     private void reconnectDB(){

@@ -26,9 +26,10 @@ public class InitialSetup {
             connection.close();
 
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:"+DB.port+"/ebs", DB.user, DB.password);
-            String createTableQuery = "create table profiles(name varchar(50),email varchar(100),pwd varchar(128),phone varchar(10),acc_type BIT);";
+            String createTableQuery = "create table profiles(id int PRIMARY KEY AUTO_INCREMENT, name varchar(50),email varchar(100) UNIQUE,pwd varchar(128),phone varchar(10),acc_type BIT);";
             Statement stmt1 = connection.createStatement();
             stmt1.executeQuery(createTableQuery);
+//            stmt1.executeQuery(createTableQuery);
             connection.close();
 
         }

@@ -1,6 +1,5 @@
 package com.userinterface;
 
-
 import com.database.RegisterAndLoginQuery;
 
 import com.userinterface.components.*;
@@ -81,7 +80,10 @@ public class Login extends JFrame {
         registerB.addActionListener(e -> register());
         loginPanel.add(registerB,gbc);
 
+
+//        TODO Remove
 //        Settings Button
+        /*
         gbc.anchor = GridBagConstraints.LINE_END;
         gbc.fill=GridBagConstraints.NONE;
         gbc.gridwidth=1;
@@ -89,6 +91,8 @@ public class Login extends JFrame {
         registerB = new buttonComponent("","sprites/icons/settings.png",15,Color.PINK,Color.BLACK);
         registerB.addActionListener(e -> settings());
         loginPanel.add(registerB,gbc);
+
+         */
 
 //        Adding Login Panel to JFrame
         add(loginPanel,BorderLayout.CENTER);
@@ -131,11 +135,12 @@ public class Login extends JFrame {
         emailT.requestFocus();
     }
 
-    private void settings(){
-        setVisible(false);
-        JFrame frame = new ConfigDB_Settings();
-        frame.setLocationRelativeTo(null);
-    }
+//    TODO Remove from Future
+//    private void settings(){
+//        setVisible(false);
+//        JFrame frame = new ConfigDB_Settings();
+//        frame.setLocationRelativeTo(null);
+//    }
 
 
 }

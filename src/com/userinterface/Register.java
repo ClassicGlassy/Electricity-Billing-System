@@ -179,6 +179,7 @@ public class Register extends JFrame{
         nameT.setText("");
         emailT.setText("");
         phoneT.setText("");
+        passwordT.setText("");
         acc_typeC.setSelectedIndex(1);
         nameT.requestFocus();
     }

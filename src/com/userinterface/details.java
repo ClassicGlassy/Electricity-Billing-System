@@ -48,6 +48,5 @@ public class details extends JPanel {
         gc.gridy = 1;
         add(occupationField,gc);
 
-
     }
 }
