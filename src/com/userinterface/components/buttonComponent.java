@@ -29,5 +29,6 @@ public class buttonComponent extends JButton {
         this.setForeground(FG);
         this.setHorizontalAlignment(SwingConstants.LEFT);
         this.setIconTextGap(15);
+        this.setBorder(null);
     }
 }

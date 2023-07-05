@@ -26,13 +26,14 @@ public class Register extends JFrame{
 //        Set the Title of JFrame to Register.
         super("Register");
         setLayout(new BorderLayout());
+//        setBackground(Color.decode("#EDF2FB"));
 
 
 //        Initializing Panel for Elements using for Registration
         JPanel registerPanel = new JPanel(new GridBagLayout());
-        registerPanel.setBorder(new TitledBorder(new LineBorder(Color.BLUE),"Create Account"
-                ,TitledBorder.LEADING,TitledBorder.TOP,null,Color.red));
-        registerPanel.setBackground(Color.WHITE);
+//        registerPanel.setBorder(new TitledBorder(new LineBorder(Color.BLUE),"Create Account"
+//                ,TitledBorder.LEADING,TitledBorder.TOP,null,Color.red));
+        registerPanel.setBackground(Color.decode("#EDF2FB"));
 
 //        GridBagConstraints
         GridBagConstraints gbc = new GridBagConstraints();
@@ -122,14 +123,14 @@ public class Register extends JFrame{
         gbc.anchor = GridBagConstraints.LINE_START;
 
         gbc.gridx=1; gbc.gridy=6;
-        submit = new buttonComponent("Submit","sprites/icons/register_Ico.png",15,Color.YELLOW,Color.BLACK);
+        submit = new buttonComponent("Submit","sprites/icons/register_Ico.png",15,Color.green,Color.BLACK);
         submit.addActionListener(e -> submitQuery());
 
         registerPanel.add(submit,gbc);
 
         gbc.gridx=3;
         gbc.anchor = GridBagConstraints.LINE_END;
-        clear = new buttonComponent("Clear","sprites/icons/clear_Ico.png",15,Color.PINK,Color.WHITE);
+        clear = new buttonComponent("Clear","sprites/icons/clear_Ico.png",15,Color.decode("#CCDBFD"),Color.black);
         clear.addActionListener(e -> clear());
 
         registerPanel.add(clear,gbc);
@@ -137,7 +138,7 @@ public class Register extends JFrame{
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridy = 0;gbc.gridx = 0;
         gbc.gridwidth = 3;
-        back = new buttonComponent("Back",Color.CYAN,Color.BLUE);
+        back = new buttonComponent("Back",Color.decode("#E2EAFC"),Color.BLACK);
         back.addActionListener(e -> login());
         registerPanel.add(back,gbc);
 

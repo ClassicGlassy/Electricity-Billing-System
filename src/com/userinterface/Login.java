@@ -3,6 +3,7 @@ package com.userinterface;
 import com.database.RegisterAndLoginQuery;
 
 import com.userinterface.components.*;
+import com.userinterface.project.dashboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,10 +22,11 @@ public class Login extends JFrame {
 //        Set the Title of Login Frame
         super("Login");
         setLayout(new BorderLayout());
+//        setBackground(Color.decode("#EDF2FB"));
 
 //        Row 1: Picture
         JPanel loginPicPanel = new JPanel(new GridBagLayout());
-        loginPicPanel.setBackground(Color.WHITE);
+        loginPicPanel.setBackground(Color.decode("#EDF2FB"));
         GridBagConstraints gbc1 = new GridBagConstraints();
         gbc1.gridx =0;gbc1.gridy = 0;
         loginImage = new imageComponent("sprites/icons/user_avatar_icon.png",160,160);
@@ -33,7 +35,7 @@ public class Login extends JFrame {
 
 //        Initializing Panel to add Elements named loginPanel
         JPanel loginPanel = new JPanel(new GridBagLayout());
-        loginPanel.setBackground(Color.WHITE);
+        loginPanel.setBackground(Color.decode("#EDF2FB"));
 
 //        GridBag Constraints
         GridBagConstraints gbc = new GridBagConstraints();
@@ -44,7 +46,7 @@ public class Login extends JFrame {
         gbc.gridy=0;gbc.gridx=0;
         gbc.gridwidth = 3;
 //        usernameL = new JLabel("Username:");
-        emailL = new labelComponent("Email:");
+        emailL = new labelComponent("Email:",25);
         loginPanel.add(emailL,gbc);
 
         gbc.gridy=1;gbc.gridwidth=3;
@@ -55,7 +57,7 @@ public class Login extends JFrame {
 //        Row 3: Password
         gbc.gridy=2;gbc.gridwidth=1;
 //        passwordL = new JLabel("Password:");
-        passwordL = new labelComponent("Password:");
+        passwordL = new labelComponent("Password:",25);
         loginPanel.add(passwordL,gbc);
 
         gbc.gridy=3;gbc.gridwidth=3;
@@ -68,7 +70,7 @@ public class Login extends JFrame {
         gbc.fill=GridBagConstraints.HORIZONTAL;
 
         gbc.gridy = 4; gbc.gridx= 0;
-        loginB = new buttonComponent("Login","sprites/icons/login_Ico.png",15,Color.GREEN,Color.BLACK);
+        loginB = new buttonComponent("Login","sprites/icons/login_Ico.png",20,Color.GREEN,Color.BLACK);
         loginB.addActionListener(e -> login());
         loginPanel.add(loginB,gbc);
 
@@ -76,7 +78,7 @@ public class Login extends JFrame {
         gbc.fill=GridBagConstraints.NONE;
         gbc.gridwidth=1;
         gbc.gridx = 2;
-        registerB = new buttonComponent("Register","sprites/icons/register_Ico.png",15,Color.PINK,Color.BLACK);
+        registerB = new buttonComponent("Register","sprites/iconfinder/Typicons/8542459_user_plus_icon.png",20,Color.decode("#E2EAFC"),Color.BLACK);
         registerB.addActionListener(e -> register());
         loginPanel.add(registerB,gbc);
 
@@ -111,9 +113,11 @@ public class Login extends JFrame {
             try (ResultSet rs = Login.loginUser(emailT.getText(), String.valueOf(passwordT.getPassword()))) {
                 if (rs.next()) {
                     setVisible(false);
-                    if (rs.getByte("acc_type") == 0) new Project("Admin");
-                    else new Project("Tenant");
-                } else {
+//                    if (rs.getByte("acc_type") == 0) new Project("Admin");
+//                    else new Project("Tenant");
+                    new dashboard(rs.getByte("acc_type"));
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "Invalid Login Credentials");
                     clear();
                 }
