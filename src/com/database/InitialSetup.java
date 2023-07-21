@@ -9,6 +9,8 @@ public class InitialSetup {
     public InitialSetup() throws SQLException{
         try{
             DeserializeFile DB = new DeserializeFile();
+
+//            Creating connection to Server to retrieve
             Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:"+DB.port, DB.user, DB.password);
 
             String dbName = "ebs";
@@ -17,19 +19,27 @@ public class InitialSetup {
                 String catalogs = rs.getString(1);
 
                 if(dbName.equals(catalogs)){
+                    connection.close();
                     return;
                 }
             }
-            String createDBQuery = "create database ebs;";
+
+//              TODO Check for this line in next patch.
+            String Query = "CREATE DATABASE ebs;";
             Statement stmt = connection.createStatement();
-            stmt.executeQuery(createDBQuery);
+            stmt.executeQuery(Query);
             connection.close();
 
+//              Connection to Database EBS.
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:"+DB.port+"/ebs", DB.user, DB.password);
-            String createTableQuery = "create table profiles(id int PRIMARY KEY AUTO_INCREMENT, name varchar(50),email varchar(100) UNIQUE,pwd varchar(128),phone varchar(10),acc_type BIT);";
-            Statement stmt1 = connection.createStatement();
-            stmt1.executeQuery(createTableQuery);
-//            stmt1.executeQuery(createTableQuery);
+
+//            Creating Tables
+
+//            Profile Tables
+            Query = "CREATE TABLE profiles(id int PRIMARY KEY AUTO_INCREMENT, name varchar(50),email varchar(100) UNIQUE,pwd varchar(128),phone varchar(10),acc_type BIT);";
+            stmt.executeQuery(Query);
+
+
             connection.close();
 
         }

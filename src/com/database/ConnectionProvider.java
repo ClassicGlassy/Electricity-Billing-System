@@ -15,21 +15,10 @@ public class ConnectionProvider {
             connection = DriverManager.getConnection("jdbc:mariadb://localhost:"+DB.port + "/ebs", DB.user, DB.password);
         }
         catch (SQLException e){
-            throw new SQLException("Cannot connect to DataBase. Please start the Database or Configure your settings.");
+            throw new SQLException("Database has been disconnected. Reconnect and Try Again!");
         }
     }
     public Connection getConnection() {
-        return connection;
-    }
-
-//    REMOVE this Function if not used in Future
-    public void closeDB(Connection c){
-        try {
-            c.close();
-        }
-        catch (SQLException e){
-            System.out.println("Can't Close DB");
-        }
-
+        return this.connection;
     }
 }
