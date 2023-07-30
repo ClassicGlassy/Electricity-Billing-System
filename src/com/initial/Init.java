@@ -25,9 +25,7 @@ public class Init{
             return;
         }
 
-
-//        Invkoes Login frame.
-
+//        Invokes Login frame.
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
