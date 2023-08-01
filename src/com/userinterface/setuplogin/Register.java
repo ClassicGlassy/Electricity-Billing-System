@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class Register extends JFrame{
 
@@ -154,22 +154,64 @@ public class Register extends JFrame{
         int option = JOptionPane.showConfirmDialog(null,"Do you want to register?");
         if(option == 0) {
             try {
-                String insertQuery = "insert into profiles(name,email,pwd,phone,acc_type) values(?,?,?,?,?)";
                 ConnectionProvider _connectionProvider = new ConnectionProvider();
                 Connection con = _connectionProvider.getConnection();
+                String query = null;
+                PreparedStatement statement;
+                ResultSet rs;
 
-//              Prepared Statement
-                PreparedStatement statement = con.prepareStatement(insertQuery);
+//                Checking if Email address exist or not
+                query = "SELECT EXISTS(SELECT * from login WHERE email = ?);";
+                statement = con.prepareStatement(query);
+                statement.setString(1, emailT.getText());
+                rs = statement.executeQuery();
+                if (rs.next()) {
+                    if(rs.getInt(1) == 0) {
+//                        Email doesn't exist so we can register.
 
-//              Set the Value
-                statement.setString(1, nameT.getText());
-                statement.setString(2, emailT.getText());
-                statement.setString(3, String.valueOf(passwordT.getPassword()));
-                statement.setString(4, phoneT.getText());
-                statement.setByte(5, (byte) acc_typeC.getSelectedIndex());
+//                          First Query to users table
+                            query = "insert into users(name,phone) values(?,?)";
+                            statement = con.prepareStatement(query);
+//                          Set the Value for users
+                            statement.setString(1, nameT.getText());
+                            statement.setString(2, phoneT.getText());
+                            statement.executeUpdate();
 
-                JOptionPane.showMessageDialog(null,"Account created successfully!");
-                login();
+
+//                          Find the ID of user
+                            query = "Select id from users where name = ? AND phone = ?";
+                            statement = con.prepareStatement(query);
+                            statement.setString(1, nameT.getText());
+                            statement.setString(2, phoneT.getText());
+                            rs = statement.executeQuery();
+                            int userid = 0;
+                            if (rs.next()) {
+                                userid = rs.getInt(1);
+                            }
+
+//                            Second Query to login table
+                            query = "INSERT INTO login(email, password, userid, acc_type) VALUES(?,?,?,?)";
+                            statement = con.prepareStatement(query);
+                            statement.setString(1,emailT.getText());
+                            statement.setString(2, String.valueOf(passwordT.getPassword()));
+                            statement.setInt(3,userid);
+                            statement.setInt(4, acc_typeC.getSelectedIndex());
+
+                            statement.executeUpdate();
+
+                        JOptionPane.showMessageDialog(null,"Account created successfully!");
+                        login();
+
+
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Account with same Email Address already exist");
+                        clear();
+                    }
+                }
+
+
+
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,e.getMessage());
             }
