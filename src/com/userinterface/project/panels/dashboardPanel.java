@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class dashboardPanel extends JPanel {
-    public dashboardPanel(){
+    public dashboardPanel(int userid){
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 

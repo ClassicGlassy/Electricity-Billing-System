@@ -91,15 +91,15 @@ public class Login extends JFrame {
             ConnectionProvider _connectionProvider = new ConnectionProvider();
             con = _connectionProvider.getConnection();
 
-            String query = "select acc_type from login where email = ? and pwd = ?";
+            String query = "SELECT acc_type, userid FROM login where email = ? and password = ?";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, Email);
             statement.setString(2, Password);
-            
+
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     setVisible(false);
-                    new applicationFrame(rs.getByte("acc_type"));
+                    new applicationFrame(rs.getByte("acc_type"), rs.getInt("userid"));
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Invalid Login Credentials");

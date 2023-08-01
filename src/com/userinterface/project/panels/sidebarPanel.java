@@ -9,7 +9,7 @@ public class sidebarPanel extends JPanel {
     buttonComponent btn1, btn2, btn3, btn4 , btn5;
     imageComponent user_image;
 
-    public sidebarPanel(int acc_type, JFrame parentFrame){
+    public sidebarPanel(int acc_type, JFrame parentFrame , int userid){
         setBackground(Color.decode("#E2EAFC"));
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -24,7 +24,7 @@ public class sidebarPanel extends JPanel {
         gbc.weighty = 0;
         gbc.anchor = GridBagConstraints.LINE_START;
         btn1.addActionListener(e -> {
-            dashboardPanel dashboard = new dashboardPanel();
+            dashboardPanel dashboard = new dashboardPanel(userid);
             parentFrame.getContentPane().remove(1);
             parentFrame.getContentPane().add(dashboard,BorderLayout.CENTER);
             parentFrame.getContentPane().validate();
@@ -37,7 +37,7 @@ public class sidebarPanel extends JPanel {
         //        Row 5: Profile
         btn5 = new buttonComponent("Profile","sprites/iconfinder/panels/8542594_user_edit_icon.png",30,50,50,Color.decode("#E2EAFC"), Color.decode("#2B3674"));
         btn5.addActionListener(e -> {
-            profilesPanel profile = new profilesPanel();
+            profilesPanel profile = new profilesPanel(userid);
             parentFrame.getContentPane().remove(1);
             parentFrame.getContentPane().add(profile,BorderLayout.CENTER);
             parentFrame.getContentPane().validate();
@@ -93,7 +93,7 @@ public class sidebarPanel extends JPanel {
             //        Row 2: Reports
             btn2 = new buttonComponent("Transactions","sprites/iconfinder/panels/receipt.png",30,50,50,Color.decode("#E2EAFC"), Color.decode("#2B3674"));
             btn2.addActionListener(e -> {
-                reportsPanel report = new reportsPanel();
+                reportsPanel report = new reportsPanel(userid);
                 parentFrame.getContentPane().remove(1);
                 parentFrame.getContentPane().add(report,BorderLayout.CENTER);
                 parentFrame.getContentPane().validate();

@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class profilesPanel extends JPanel {
-    public profilesPanel(){
+    public profilesPanel(int userid){
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 

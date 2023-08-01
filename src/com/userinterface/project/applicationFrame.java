@@ -1,7 +1,6 @@
 package com.userinterface.project;
 
 import com.userinterface.project.panels.dashboardPanel;
-import com.userinterface.project.panels.profilesPanel;
 import com.userinterface.project.panels.sidebarPanel;
 
 import javax.swing.*;
@@ -9,14 +8,14 @@ import java.awt.*;
 
 public class applicationFrame extends JFrame{
 
-    public applicationFrame(int acc_type)
+    public applicationFrame(int acc_type, int userid)
     {
         setTitle("Electricity Billing System");
         setLayout(new BorderLayout());
 
 //        SidePanel
-        add(new sidebarPanel(acc_type, this),BorderLayout.WEST);
-        add(new dashboardPanel(),BorderLayout.CENTER);
+        add(new sidebarPanel(acc_type, this, userid),BorderLayout.WEST);
+        add(new dashboardPanel(userid),BorderLayout.CENTER);
 
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -27,7 +26,7 @@ public class applicationFrame extends JFrame{
 
 //    TODO Remove Main Function
     public static void main(String[] args) {
-        new applicationFrame(1);
+        new applicationFrame(1, 3);
     }
 
 }
