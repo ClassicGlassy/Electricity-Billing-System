@@ -20,7 +20,7 @@ public class reportsPanel extends JScrollPane {
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        String[] columnNames = {"Bill No", "Reading Date", "Previous Reading", "Present Reading", "Total Unit Consumed", "Amounts Calculated", "Arrears", "Amounts Paid", "Extra"};
+        String[] columnNames = {"Bill No", "Reading Date", "Previous Reading", "Present Reading", "Total Unit Consumed", "Amounts Calculated"};
         Object[][] rowData = new Object[0][];
 
         DefaultTableModel model = new DefaultTableModel(rowData, columnNames);
@@ -49,8 +49,7 @@ public class reportsPanel extends JScrollPane {
             int i = 0;
             while(rs.next()) {
                 model.insertRow(i, new Object[]{rs.getString("billno"), rs.getString("readingM") + "/" + rs.getString("readingY"),
-                        rs.getString("prev_reading"),rs.getString("pres_reading"),rs.getString("consumedU"),rs.getString("amt_calculated"),rs.getString("arrears"),
-                        rs.getString("amt_paid"),rs.getString("extra")});
+                        rs.getString("prev_reading"),rs.getString("pres_reading"),rs.getString("consumedU"),rs.getString("amt_calculated")});
                 i++;
             }
 

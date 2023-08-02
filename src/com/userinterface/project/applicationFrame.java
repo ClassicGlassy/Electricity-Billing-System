@@ -21,7 +21,7 @@ public class applicationFrame extends JFrame{
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        System.out.println("Frame: "+ getPreferredSize());
+//        System.out.println("Frame: "+ getPreferredSize());
     }
 
 //    TODO Remove Main Function

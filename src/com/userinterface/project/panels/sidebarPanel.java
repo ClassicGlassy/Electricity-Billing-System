@@ -112,6 +112,6 @@ public class sidebarPanel extends JPanel {
 
         setVisible(true);
 
-        System.out.println("Side Panel: "+getPreferredSize());
+//        System.out.println("Side Panel: "+getPreferredSize());
     }
 }

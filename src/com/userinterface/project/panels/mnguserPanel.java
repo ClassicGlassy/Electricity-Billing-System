@@ -2,6 +2,7 @@ package com.userinterface.project.panels;
 
 import com.database.ConnectionProvider;
 import com.userinterface.components.Utility;
+import com.userinterface.project.popupFrames.editProfileFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

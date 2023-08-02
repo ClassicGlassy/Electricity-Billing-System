@@ -1,4 +1,4 @@
-package com.userinterface.project.panels;
+package com.userinterface.project.popupFrames;
 
 import com.database.ConnectionProvider;
 import com.userinterface.components.buttonComponent;
