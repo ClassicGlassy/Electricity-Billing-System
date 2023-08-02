@@ -79,6 +79,7 @@ public class Login extends JFrame {
 
 
 //        Properties of Login Frame.
+//        setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500,600);
         setVisible(true);

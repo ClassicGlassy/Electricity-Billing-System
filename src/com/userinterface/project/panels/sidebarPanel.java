@@ -24,14 +24,13 @@ public class sidebarPanel extends JPanel {
         gbc.weighty = 0;
         gbc.anchor = GridBagConstraints.LINE_START;
         btn1.addActionListener(e -> {
-            dashboardPanel dashboard = new dashboardPanel(userid);
+            dashboardPanel dashboard = new dashboardPanel(userid, acc_type);
             parentFrame.getContentPane().remove(1);
             parentFrame.getContentPane().add(dashboard,BorderLayout.CENTER);
             parentFrame.getContentPane().validate();
             parentFrame.getContentPane().repaint();
 
         });
-
         add(btn1,gbc);
 
         //        Row 5: Profile
@@ -66,7 +65,7 @@ public class sidebarPanel extends JPanel {
             //        Row 3: Manage Users
             btn3 = new buttonComponent("Manage Users","sprites/iconfinder/panels/user_configure.png",30,50,50,Color.decode("#E2EAFC"), Color.decode("#2B3674"));
             btn3.addActionListener(e -> {
-                mnguserPanel users = new mnguserPanel();
+                mnguserPanel users = new mnguserPanel(parentFrame);
                 parentFrame.getContentPane().remove(1);
                 parentFrame.getContentPane().add(users,BorderLayout.CENTER);
                 parentFrame.getContentPane().validate();

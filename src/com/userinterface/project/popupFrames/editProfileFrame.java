@@ -3,15 +3,18 @@ package com.userinterface.project.popupFrames;
 import com.database.ConnectionProvider;
 import com.userinterface.components.buttonComponent;
 import com.userinterface.components.labelComponent;
+import com.userinterface.project.panels.mnguserPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 
 public class editProfileFrame extends JFrame {
-    public editProfileFrame (String email){
+    JFrame parentFrame;
+    public editProfileFrame (String email, JFrame panelInstance){
         super("Manage User");
 
+        parentFrame = panelInstance;
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -47,11 +50,11 @@ public class editProfileFrame extends JFrame {
             PreparedStatement statement;
             ResultSet rs;
 
-            query = "SELECT meterno, count(meterno) FROM meterdetails;";
+            query = "SELECT count(meterno) FROM meterdetails;";
             statement = con.prepareStatement(query);
             rs = statement.executeQuery();
             rs.next();
-            String[] meterOptions = new String[rs.getInt(2)];
+            String[] meterOptions = new String[rs.getInt(1)];
 
             query = "SELECT meterno FROM meterdetails;";
             statement = con.prepareStatement(query);
@@ -108,7 +111,6 @@ public class editProfileFrame extends JFrame {
         add(panel);
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         setVisible(true);
     }
 
@@ -127,6 +129,13 @@ public class editProfileFrame extends JFrame {
 
             if(statement.executeUpdate() == 1){
                 JOptionPane.showMessageDialog(null,"User Information Updated Successfully");
+                mnguserPanel users = new mnguserPanel(parentFrame);
+                parentFrame.getContentPane().remove(1);
+                parentFrame.getContentPane().add(users,BorderLayout.CENTER);
+                parentFrame.getContentPane().validate();
+                parentFrame.getContentPane().repaint();
+                setVisible(false);
+                dispose();
             }
         }
         catch (SQLException e){

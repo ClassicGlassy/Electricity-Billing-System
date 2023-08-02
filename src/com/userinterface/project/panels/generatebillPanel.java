@@ -5,10 +5,10 @@ import com.database.ConnectionProvider;
 import com.userinterface.components.buttonComponent;
 import com.userinterface.components.labelComponent;
 import com.userinterface.components.textboxComponent;
+import com.userinterface.project.popupFrames.usersBillFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigInteger;
 import java.sql.*;
 
 public class generatebillPanel extends JPanel {
@@ -150,8 +150,6 @@ public class generatebillPanel extends JPanel {
             gbc.gridx = 2;
             gbc.gridwidth = 2;
 //            gbc.insets = new Insets(0,10,10,0);
-            System.out.println(month);
-            System.out.println(year);
             labelComponent billMYV = new labelComponent((month+1) + "-" + (2078 + year), 20);
             gbc.gridy=0;
             add(billMYV,gbc);
@@ -192,8 +190,8 @@ public class generatebillPanel extends JPanel {
         catch (SQLException e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
-
     }
+
 //    Bill Preview
     private void confirmBill(String billno, int month, int year,int prev_read, int pres_read, float amt_calculated){
         String query = "INSERT INTO housebill (billno, readingM, readingY, prev_reading, pres_reading, amt_calculated) VALUES (?,?,?,?,?,?);";
@@ -212,20 +210,17 @@ public class generatebillPanel extends JPanel {
 
             if(statement.executeUpdate() == 1){
                 JOptionPane.showMessageDialog(null,"Data inserted Successfully!");
+                usersBillFrame userbillFrame = new usersBillFrame(billno);
+                userbillFrame.setLocationRelativeTo(null);
             }
             else{
                 JOptionPane.showMessageDialog(null,"Data cannot be inserted!", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-
-
-
         }
         catch (SQLException e){
             JOptionPane.showMessageDialog(null,e.getMessage(),"WARNING",JOptionPane.WARNING_MESSAGE);
         }
     }
-
 
 //    Functions
     String[] returnArray(int start,int end){

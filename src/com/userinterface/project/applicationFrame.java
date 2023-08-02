@@ -15,7 +15,7 @@ public class applicationFrame extends JFrame{
 
 //        SidePanel
         add(new sidebarPanel(acc_type, this, userid),BorderLayout.WEST);
-        add(new dashboardPanel(userid),BorderLayout.CENTER);
+        add(new dashboardPanel(userid, acc_type),BorderLayout.CENTER);
 
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);

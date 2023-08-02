@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class mnguserPanel extends JScrollPane {
-    public mnguserPanel(){
+    public mnguserPanel(JFrame parentFrame){
         setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         String[] columnNames = {"Name", "Email", "Meter No", "Status"};
@@ -34,7 +34,7 @@ public class mnguserPanel extends JScrollPane {
                 if (me.getClickCount() == 2) {     // to detect doble click events
                     JTable target = (JTable)me.getSource();
                     int row = target.getSelectedRow(); // select a row
-                    editProfileFrame frame = new editProfileFrame((String) table.getValueAt(row,1));
+                    editProfileFrame frame = new editProfileFrame((String) table.getValueAt(row,1), parentFrame );
                     frame.setLocationRelativeTo(null);
                 }
             }
