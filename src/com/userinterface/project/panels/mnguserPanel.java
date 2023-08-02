@@ -48,7 +48,6 @@ public class mnguserPanel extends JScrollPane {
             ConnectionProvider _connectionProvider = new ConnectionProvider();
             con = _connectionProvider.getConnection();
             String query;
-//            PreparedStatement statement;
             ResultSet rs;
 
             query = "SELECT U.name, L.email, U.meterno, U.status FROM users AS U LEFT JOIN login AS L ON U.id = L.userid WHERE L.acc_type = 1;";

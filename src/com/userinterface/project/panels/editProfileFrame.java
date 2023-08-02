@@ -105,10 +105,6 @@ public class editProfileFrame extends JFrame {
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
 
-
-
-
-
         add(panel);
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
