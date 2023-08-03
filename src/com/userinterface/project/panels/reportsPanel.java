@@ -3,10 +3,14 @@ package com.userinterface.project.panels;
 import com.database.ConnectionProvider;
 import com.userinterface.components.Utility;
 import com.userinterface.components.labelComponent;
+import com.userinterface.project.popupFrames.billDetailsFrame;
+import com.userinterface.project.popupFrames.editProfileFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 
 public class reportsPanel extends JScrollPane {
@@ -26,6 +30,16 @@ public class reportsPanel extends JScrollPane {
             }
         };
         table.setFocusable(false);
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {     // to detect doble click events
+                    JTable target = (JTable)me.getSource();
+                    int row = target.getSelectedRow(); // select a row
+                    billDetailsFrame frame = new billDetailsFrame((String) table.getValueAt(row,0)  );
+                    frame.setLocationRelativeTo(null);
+                }
+            }
+        });
 
         Utility util = new Utility();
         table.setFont(util.convertToFont("font/OpenSans.ttf", 20));
