@@ -10,12 +10,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Register extends JFrame{
 
 //    Elements for JPanel
-    JLabel title, nameL, emailL,passwordL, phoneL, acc_typeL, meterL;
-    JTextField nameT,emailT,phoneT,meterT;
+    JLabel title, nameL, emailL,passwordL, phoneL, acc_typeL;
+    JTextField nameT,emailT,phoneT;
     JPasswordField passwordT;
     JComboBox<String> acc_typeC;
     JButton submit,clear,back;
@@ -153,20 +155,28 @@ public class Register extends JFrame{
     private void submitQuery(){
         int option = JOptionPane.showConfirmDialog(null,"Do you want to register?");
         if(option == 0) {
-            try {
-                ConnectionProvider _connectionProvider = new ConnectionProvider();
-                Connection con = _connectionProvider.getConnection();
-                String query = null;
-                PreparedStatement statement;
-                ResultSet rs;
+            String emailAddress = emailT.getText();
+            String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                    + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
+            Pattern pattern = Pattern.compile(regexPattern);
+            Matcher matcher = pattern.matcher(emailAddress);
+
+            if (matcher.matches() && !emailAddress.isEmpty()){
+                try {
+                    ConnectionProvider _connectionProvider = new ConnectionProvider();
+                    Connection con = _connectionProvider.getConnection();
+                    String query;
+                    PreparedStatement statement;
+                    ResultSet rs;
 
 //                Checking if Email address exist or not
-                query = "SELECT EXISTS(SELECT * from login WHERE email = ?);";
-                statement = con.prepareStatement(query);
-                statement.setString(1, emailT.getText());
-                rs = statement.executeQuery();
-                if (rs.next()) {
-                    if(rs.getInt(1) == 0) {
+                    query = "SELECT EXISTS(SELECT * from login WHERE email = ?);";
+                    statement = con.prepareStatement(query);
+                    statement.setString(1, emailT.getText());
+                    rs = statement.executeQuery();
+                    if (rs.next()) {
+                        if(rs.getInt(1) == 0) {
 //                        Email doesn't exist so we can register.
 
 //                          First Query to users table
@@ -199,22 +209,28 @@ public class Register extends JFrame{
 
                             statement.executeUpdate();
 
-                        JOptionPane.showMessageDialog(null,"Account created successfully!");
-                        login();
+                            JOptionPane.showMessageDialog(null,"Account created successfully!");
+                            login();
 
 
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null,"Account with same Email Address already exist");
+                            clear();
+                        }
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null,"Account with same Email Address already exist");
-                        clear();
-                    }
+
+
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null,e.getMessage());
                 }
-
-
-
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,e.getMessage());
             }
+            else{
+                JOptionPane.showMessageDialog(null,"Invalid Email Address");
+            }
+
+
         }
     }
 
