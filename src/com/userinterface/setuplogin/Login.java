@@ -7,6 +7,8 @@ import com.userinterface.project.applicationFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -92,10 +94,22 @@ public class Login extends JFrame {
             ConnectionProvider _connectionProvider = new ConnectionProvider();
             con = _connectionProvider.getConnection();
 
+            //                            HASH PASSWORD
+            // get an instance of the SHA-256 message digest algorithm
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            // compute the hash of the input string
+            byte[] hash = md.digest(Password.getBytes());
+
+            // convert the hash to a hexadecimal string
+            StringBuilder hashPassword = new StringBuilder();
+            for (byte b : hash) {
+                hashPassword.append(String.format("%02x", b));
+            }
+
             String query = "SELECT acc_type, userid FROM login where email = ? and password = ?";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, Email);
-            statement.setString(2, Password);
+            statement.setString(2, String.valueOf(hashPassword));
 
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
@@ -110,6 +124,8 @@ public class Login extends JFrame {
         }
         catch (SQLException e){
             JOptionPane.showMessageDialog(null,e.getMessage());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 

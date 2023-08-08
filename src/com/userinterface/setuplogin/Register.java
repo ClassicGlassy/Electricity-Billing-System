@@ -6,6 +6,8 @@ import com.userinterface.components.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -173,7 +175,7 @@ public class Register extends JFrame{
 //                Checking if Email address exist or not
                     query = "SELECT EXISTS(SELECT * from login WHERE email = ?);";
                     statement = con.prepareStatement(query);
-                    statement.setString(1, emailT.getText());
+                    statement.setString(1, emailAddress);
                     rs = statement.executeQuery();
                     if (rs.next()) {
                         if(rs.getInt(1) == 0) {
@@ -199,11 +201,25 @@ public class Register extends JFrame{
                                 userid = rs.getInt(1);
                             }
 
+//                            HASH PASSWORD
+                            String password = String.valueOf(passwordT.getPassword());
+                            // get an instance of the SHA-256 message digest algorithm
+                            MessageDigest md = MessageDigest.getInstance("SHA-256");
+                            // compute the hash of the input string
+                            byte[] hash = md.digest(password.getBytes());
+
+                            // convert the hash to a hexadecimal string
+                            StringBuilder hashPassword = new StringBuilder();
+                            for (byte b : hash) {
+                                hashPassword.append(String.format("%02x", b));
+                            }
+
+
 //                            Second Query to login table
                             query = "INSERT INTO login(email, password, userid, acc_type) VALUES(?,?,?,?)";
                             statement = con.prepareStatement(query);
-                            statement.setString(1,emailT.getText());
-                            statement.setString(2, String.valueOf(passwordT.getPassword()));
+                            statement.setString(1,emailAddress);
+                            statement.setString(2, String.valueOf(hashPassword));
                             statement.setInt(3,userid);
                             statement.setInt(4, acc_typeC.getSelectedIndex());
 
@@ -224,6 +240,8 @@ public class Register extends JFrame{
 
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null,e.getMessage());
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
                 }
             }
             else{
