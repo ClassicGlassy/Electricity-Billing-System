@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class usersBillFrame extends JFrame {
     int i = 0;
     String billNo;
-    public usersBillFrame(String billno){
+    public usersBillFrame(String billno, int tenantSize){
 //        super("Generate User Bill");
         billNo = billno;
 
@@ -28,7 +28,6 @@ public class usersBillFrame extends JFrame {
 
         calculateFinalAmount calculator = new calculateFinalAmount();
 
-
         try {
             Connection con;
             ConnectionProvider _connectionProvider = new ConnectionProvider();
@@ -37,11 +36,8 @@ public class usersBillFrame extends JFrame {
             PreparedStatement statement;
             ResultSet rs;
 
-            query = "SELECT COUNT(DISTINCT(meterno)) as count FROM users WHERE meterno IS NOT NULL;";
-            statement = con.prepareStatement(query);
-            rs = statement.executeQuery();
-            rs.next();
-            String[] meterOptions = new String[rs.getInt(1)];
+
+            String[] meterOptions = new String[tenantSize];
 
             query = "SELECT DISTINCT(meterno) FROM users WHERE meterno IS NOT NULL;";
             statement = con.prepareStatement(query);
