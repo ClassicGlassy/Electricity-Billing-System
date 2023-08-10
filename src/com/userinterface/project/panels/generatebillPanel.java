@@ -5,6 +5,7 @@ import com.database.ConnectionProvider;
 import com.userinterface.components.buttonComponent;
 import com.userinterface.components.labelComponent;
 import com.userinterface.components.textboxComponent;
+import com.userinterface.project.popupFrames.manageMeterFrame;
 import com.userinterface.project.popupFrames.usersBillFrame;
 
 import javax.swing.*;
@@ -80,6 +81,7 @@ public class generatebillPanel extends JPanel {
             remove(year_select);
             remove(presentReadingT);
             remove(calculateBtn);
+//            remove(mngMeter);
             validate();
             repaint();
         });
@@ -210,8 +212,19 @@ public class generatebillPanel extends JPanel {
 
             if(statement.executeUpdate() == 1){
                 JOptionPane.showMessageDialog(null,"Data inserted Successfully!");
-                usersBillFrame userbillFrame = new usersBillFrame(billno);
-                userbillFrame.setLocationRelativeTo(null);
+
+//                Checking if Tenants are present or not
+                query = "SELECT COUNT(DISTINCT(meterno)) as count FROM users WHERE meterno IS NOT NULL AND status = 1;";
+                statement = con.prepareStatement(query);
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+
+                int tenantSize = rs.getInt(1);
+                System.out.println(" Tenant size " +tenantSize);
+                if(tenantSize >0){
+                    usersBillFrame userbillFrame = new usersBillFrame(billno, tenantSize);
+                    userbillFrame.setLocationRelativeTo(null);
+                }
             }
             else{
                 JOptionPane.showMessageDialog(null,"Data cannot be inserted!", "Error", JOptionPane.ERROR_MESSAGE);

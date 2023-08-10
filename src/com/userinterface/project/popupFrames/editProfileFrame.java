@@ -7,6 +7,7 @@ import com.userinterface.project.panels.mnguserPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.sql.*;
 
 public class editProfileFrame extends JFrame {
@@ -54,17 +55,20 @@ public class editProfileFrame extends JFrame {
             statement = con.prepareStatement(query);
             rs = statement.executeQuery();
             rs.next();
-            String[] meterOptions = new String[rs.getInt(1)];
+            String[] meterOptions = new String[rs.getInt(1) + 1];
+
 
             query = "SELECT meterno FROM meterdetails;";
             statement = con.prepareStatement(query);
             rs = statement.executeQuery();
             int i =0;
+
             while(rs.next()){
                 meterOptions[i]= rs.getString("meterno");
                 i++;
             }
-
+//            Adding "Register New Meter" Option.
+            meterOptions[i] = "Register new meter";
 
             query = "SELECT name, meterno, status FROM users where id = (SELECT userid FROM login where email = ?);";
             statement = con.prepareStatement(query);
@@ -84,12 +88,24 @@ public class editProfileFrame extends JFrame {
 
                 String currentM = rs.getString("meterno");
 
-                JComboBox meterV = new JComboBox(meterOptions);
+                JComboBox<String> meterV = new JComboBox<>(meterOptions);
                 meterV.setSelectedItem(currentM);
                 gbc.gridy = 2;
+
+                meterV.addItemListener(e -> {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        System.out.println("Selected button " + meterV.getSelectedIndex());
+                        int index = meterOptions.length - 1;
+                        if(meterV.getSelectedIndex() == index ){
+                            manageMeterFrame frame = new manageMeterFrame();
+                            frame.setLocationRelativeTo(null);
+                        }
+                    }
+                });
+
                 panel.add(meterV,gbc);
 
-                JComboBox statusV = new JComboBox(statusList);
+                JComboBox<String> statusV = new JComboBox<>(statusList);
                 statusV.setSelectedIndex(rs.getInt("status"));
                 gbc.gridy = 3;
                 panel.add(statusV,gbc);
@@ -98,9 +114,7 @@ public class editProfileFrame extends JFrame {
                 gbc.anchor = GridBagConstraints.CENTER;
                 gbc.gridx = 0;
                 gbc.gridy = 4;
-                saveBtn.addActionListener(e -> {
-                    saveUser((String) meterV.getSelectedItem(), statusV.getSelectedIndex(), email);
-                });
+                saveBtn.addActionListener(e -> saveUser((String) meterV.getSelectedItem(), statusV.getSelectedIndex(), email));
                 panel.add(saveBtn,gbc);
             }
 

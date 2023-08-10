@@ -17,7 +17,7 @@ public class usersBillFrame extends JFrame {
     int i = 0;
     String billNo;
     public usersBillFrame(String billno, int tenantSize){
-//        super("Generate User Bill");
+        super("Generate User Bill");
         billNo = billno;
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -37,13 +37,15 @@ public class usersBillFrame extends JFrame {
             ResultSet rs;
 
 
-            String[] meterOptions = new String[tenantSize];
+            String[] meterOptions = new String[tenantSize + 1];
 
             query = "SELECT DISTINCT(meterno) FROM users WHERE meterno IS NOT NULL;";
             statement = con.prepareStatement(query);
             rs = statement.executeQuery();
 
+
             while (rs.next()) {
+//                Setting Meter Options
                 meterOptions[i] = rs.getString("meterno");
                 i++;
             }
@@ -51,7 +53,7 @@ public class usersBillFrame extends JFrame {
 
 
             if(meterOptions.length > 0){
-                //            Labels
+//            Labels
                 gbc.gridx = 0;
                 labelComponent meterL = new labelComponent("Meter No:", 20);
                 gbc.gridy = 0;
@@ -101,11 +103,6 @@ public class usersBillFrame extends JFrame {
                 gbc.gridy = 4;
                 panel.add(amtV, gbc);
 
-//                float finalAmt = 0.0F;
-//                labelComponent amtV = new labelComponent(String.valueOf(finalAmt),20);
-//                gbc.gridy = 3;
-//                panel.add(amtV,gbc);
-
 //                Button
                 gbc.gridx = 0;
                 buttonComponent calculateBtn = new buttonComponent("Calculate Bill", Color.green, Color.white);
@@ -124,7 +121,8 @@ public class usersBillFrame extends JFrame {
                     gbc.gridy = 5;
                     gbc.gridwidth = 2;
                     confirmBtn.addActionListener(f -> {
-                        updateUserBill(meterOptions[i],prevV.getText(),presV.getText(),finalAmt, panel);
+                        updateUserBill(meterOptions[i],prevV.getText(),presV.getText(),finalAmt);
+//                        Retrieving Information from the I index.
                         if(i< meterOptions.length -1) {
                             i++;
                             meterV.setText(meterOptions[i]);
@@ -164,7 +162,7 @@ public class usersBillFrame extends JFrame {
         setVisible(true);
     }
 
-    private void updateUserBill(String meterno, String prev, String pres, float amount, JPanel parent){
+    private void updateUserBill(String meterno, String prev, String pres, float amount){
         try {
             Connection con;
             ConnectionProvider _connectionProvider = new ConnectionProvider();
