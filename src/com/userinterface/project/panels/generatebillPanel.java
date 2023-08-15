@@ -46,14 +46,14 @@ public class generatebillPanel extends JPanel {
         add(billNoT,gbc);
 
         String[] month_names = {"Baishakh","Jestha","Ashar","Shrawan","Bhadra","Ashwin","Kartik","Mangsir","Poush","Magh","Falgun","Chaitra"};
-        JComboBox month_select = new JComboBox(month_names);
+        JComboBox<String> month_select = new JComboBox<>(month_names);
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         add(month_select,gbc);
 
         String[] year;
         year = returnArray(2078,2085);
-        JComboBox year_select = new JComboBox(year);
+        JComboBox<String> year_select = new JComboBox<>(year);
         gbc.gridy = 1;
         gbc.gridx = 2;
         gbc.gridwidth = 1;
@@ -81,7 +81,6 @@ public class generatebillPanel extends JPanel {
             remove(year_select);
             remove(presentReadingT);
             remove(calculateBtn);
-//            remove(mngMeter);
             validate();
             repaint();
         });
@@ -106,7 +105,8 @@ public class generatebillPanel extends JPanel {
             rs = statement.executeQuery();
 
             if(rs.next()){
-                prev_reading = rs.getInt("pres_reading");
+                prev_reading = rs.getInt(1);
+                System.out.println(prev_reading);
             }
             else{
                 prev_reading = Integer.parseInt(JOptionPane.showInputDialog("Please Enter your previous meter reading"));
@@ -130,12 +130,11 @@ public class generatebillPanel extends JPanel {
             gbc.gridy=1;
             add(billNoL,gbc);
 
-//            gbc.insets = new Insets(30,10,10,0);
+
             labelComponent presReadL = new labelComponent("PRESENT READING:",20);
             gbc.gridy=2;
             add(presReadL,gbc);
             labelComponent prevReadL = new labelComponent("PREVIOUS READING:",20);
-//            gbc.insets = new Insets(0,10,10,0);
             gbc.gridy=3;
             add(prevReadL,gbc);
             labelComponent unitL = new labelComponent("UNIT:",20);
@@ -143,7 +142,6 @@ public class generatebillPanel extends JPanel {
             add(unitL,gbc);
 
             labelComponent currentAmtL = new labelComponent("CURRENT AMOUNT:",20);
-//            gbc.insets = new Insets(30,10,10,0);
             gbc.gridy=5;
             add(currentAmtL,gbc);
 
@@ -151,7 +149,6 @@ public class generatebillPanel extends JPanel {
 
             gbc.gridx = 2;
             gbc.gridwidth = 2;
-//            gbc.insets = new Insets(0,10,10,0);
             labelComponent billMYV = new labelComponent((month+1) + "-" + (2078 + year), 20);
             gbc.gridy=0;
             add(billMYV,gbc);
@@ -160,12 +157,10 @@ public class generatebillPanel extends JPanel {
             gbc.gridy=1;
             add(billNoV,gbc);
 
-//            gbc.insets = new Insets(30,10,10,0);
             labelComponent presReadV = new labelComponent(String.valueOf(pres_read),20);
             gbc.gridy=2;
             add(presReadV,gbc);
             labelComponent prevReadV = new labelComponent(String.valueOf(prev_reading),20);
-//            gbc.insets = new Insets(0,10,10,0);
             gbc.gridy=3;
             add(prevReadV,gbc);
             labelComponent unitV = new labelComponent(String.valueOf(total_unit_consumed),20);
@@ -173,7 +168,6 @@ public class generatebillPanel extends JPanel {
             add(unitV,gbc);
 
             labelComponent currentAmtV = new labelComponent(String.valueOf(amt_calcuated),20);
-//            gbc.insets = new Insets(30,10,10,0);
             gbc.gridy=5;
             add(currentAmtV,gbc);
 
@@ -219,10 +213,10 @@ public class generatebillPanel extends JPanel {
                 ResultSet rs = statement.executeQuery();
                 rs.next();
 
-                int tenantSize = rs.getInt(1);
-                System.out.println(" Tenant size " +tenantSize);
-                if(tenantSize >0){
-                    usersBillFrame userbillFrame = new usersBillFrame(billno, tenantSize);
+                int meterSize = rs.getInt(1);
+
+                if(meterSize >0){
+                    usersBillFrame userbillFrame = new usersBillFrame(billno, meterSize);
                     userbillFrame.setLocationRelativeTo(null);
                 }
             }

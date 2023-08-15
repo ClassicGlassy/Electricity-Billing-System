@@ -94,7 +94,7 @@ public class editProfileFrame extends JFrame {
 
                 meterV.addItemListener(e -> {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        System.out.println("Selected button " + meterV.getSelectedIndex());
+//                        System.out.println("Selected button " + meterV.getSelectedIndex());
                         int index = meterOptions.length - 1;
                         if(meterV.getSelectedIndex() == index ){
                             manageMeterFrame frame = new manageMeterFrame();

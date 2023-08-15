@@ -12,8 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class manageMeterFrame extends JFrame {
-
-    JPanel parent;
     public manageMeterFrame() {
 
         super("Manage Meters");
@@ -80,6 +78,7 @@ public class manageMeterFrame extends JFrame {
         });
         panel.add(saveBtn,gbc);
 
+
         panel.setVisible(true);
         add(panel);
         pack();
@@ -87,4 +86,4 @@ public class manageMeterFrame extends JFrame {
         setVisible(true);
     }
 
-    }
+}
