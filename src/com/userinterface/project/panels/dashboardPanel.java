@@ -70,9 +70,9 @@ public class dashboardPanel extends JPanel {
                 statement.setInt(1,userid);
                 rs = statement.executeQuery();
                 if(rs.next()){
-                    total_amountV = rs.getString("amount");
-                    newYear = rs.getString("readingY");
-                    total_unitV = rs.getString("unit");
+                    total_amountV = rs.getInt("amount") > 0?  rs.getString("amount"): "0";
+                    newYear = rs.getInt("readingY") > 0 ? rs.getString("readingY"): "YYYY";
+                    total_unitV = rs.getInt("unit") > 0 ? rs.getString("unit"): "0";
                 }
             }
             con.close();

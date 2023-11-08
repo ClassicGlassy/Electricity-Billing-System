@@ -25,8 +25,8 @@ public class applicationFrame extends JFrame{
     }
 
 //    TODO Remove Main Function
-    public static void main(String[] args) {
-        new applicationFrame(1, 3);
-    }
-
+//    public static void main(String[] args) {
+//        new applicationFrame(1, 3);
+//    }
+//
 }
