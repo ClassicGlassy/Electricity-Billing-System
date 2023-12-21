@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Register extends JFrame{
@@ -110,7 +109,7 @@ public class Register extends JFrame{
 //        Label
         gbc.gridx=0;gbc.gridy=5;
         gbc.gridwidth=0;
-        phoneL = new labelComponent("Phone:");
+        phoneL = new labelComponent("Phone: (10 Digits)");
         registerPanel.add(phoneL,gbc);
 //        TextField
         gbc.gridx=1;
@@ -153,18 +152,51 @@ public class Register extends JFrame{
     }
 
 //    Functions
+    private boolean validateInputs(){
+        //Name, Email, Phone
+        String name = nameT.getText();
+        String phone = phoneT.getText();
+        String emailAddress = emailT.getText();
+
+
+        String emailRegexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        String nameRegexPattern = "[a-zA-Z\\s]*";
+        String phoneRegexPattern = "[0-9]{10}";
+
+//        Checking for Blank Spaces
+        if(!name.isEmpty() && !phone.isEmpty() && !emailAddress.isEmpty()){
+//            Checking Regular Expressions
+//            Name Regular Expressions
+
+            if(Pattern.matches(nameRegexPattern, name)){
+//                Email Regex
+                if(Pattern.matches(emailRegexPattern,emailAddress)){
+                    if(Pattern.matches(phoneRegexPattern,phone)){
+                        return true;
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null,"Invalid Phone Number");
+                }
+                else
+                    JOptionPane.showMessageDialog(null,"Invalid Email Address");
+
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Invalid Name");
+            }
+
+        }
+        else
+            JOptionPane.showMessageDialog(null,"Space cannot be left Empty");
+        return false;
+    }
+
 
     private void submitQuery(){
         int option = JOptionPane.showConfirmDialog(null,"Do you want to register?");
         if(option == 0) {
-            String emailAddress = emailT.getText();
-            String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                    + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-            Pattern pattern = Pattern.compile(regexPattern);
-            Matcher matcher = pattern.matcher(emailAddress);
-
-            if (matcher.matches() && !emailAddress.isEmpty()){
+            if (validateInputs()){
                 try {
                     ConnectionProvider _connectionProvider = new ConnectionProvider();
                     Connection con = _connectionProvider.getConnection();
@@ -175,7 +207,7 @@ public class Register extends JFrame{
 //                Checking if Email address exist or not
                     query = "SELECT EXISTS(SELECT * from login WHERE email = ?);";
                     statement = con.prepareStatement(query);
-                    statement.setString(1, emailAddress);
+                    statement.setString(1, emailT.getText());
                     rs = statement.executeQuery();
                     if (rs.next()) {
                         if(rs.getInt(1) == 0) {
@@ -218,7 +250,7 @@ public class Register extends JFrame{
 //                            Second Query to login table
                             query = "INSERT INTO login(email, password, userid, acc_type) VALUES(?,?,?,?)";
                             statement = con.prepareStatement(query);
-                            statement.setString(1,emailAddress);
+                            statement.setString(1,emailT.getText());
                             statement.setString(2, String.valueOf(hashPassword));
                             statement.setInt(3,userid);
                             statement.setInt(4, acc_typeC.getSelectedIndex());
@@ -244,10 +276,6 @@ public class Register extends JFrame{
                     throw new RuntimeException(e);
                 }
             }
-            else{
-                JOptionPane.showMessageDialog(null,"Invalid Email Address");
-            }
-
 
         }
     }
